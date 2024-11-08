@@ -135,7 +135,7 @@ impl SmartQuoter {
         // math equation), interpret this as an apostrophe.
         if !double
             && opened != Some(false)
-            && (before.is_alphabetic() || before == '\u{FFFC}')
+            && (before.is_alphabetic() || before == '\u{FFFC}' || before.is_ascii_punctuation())
         {
             return "’";
         }
@@ -143,7 +143,6 @@ impl SmartQuoter {
         // If the most recently opened quotation is of this kind and the
         // previous char does not indicate a nested quotation, close it.
         if opened == Some(double)
-            && !before.is_whitespace()
             && !is_newline(before)
             && !is_opening_bracket(before)
         {
